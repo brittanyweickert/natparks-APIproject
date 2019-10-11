@@ -1,14 +1,13 @@
-'use strict'
-
 const API_KEY = 'b6QiTCrcVkGQsPjHDXCwpnLLbHS6t8jCKTvO11V2'
 const baseURL = 'https://developer.nps.gov/api/v1'
 
-const options = {
-	headers: new Headers({
-		'X-Api-Key': API_KEY,
-		'Host': 'developer.nps.gov'
-	})
-}
+// WHY NOT WORKING!!???
+// const options = {
+// 	headers: new Headers({
+// 		'X-Api-Key': API_KEY,
+// 		Host: 'developer.nps.gov'
+// 	})
+// }
 
 function getParksHTML(parks) {
 	return parks.map((park, index) => {
@@ -22,20 +21,22 @@ function getParksHTML(parks) {
 function getParkResults(states, maxResults) {
 	let params = {
 		stateCode: states,
-		limit: maxResults
+		api_key: API_KEY
 	}
 
 	const url = `${baseURL}/parks?${$.param(params)}`
 
-	fetch(url, options)
+	fetch(url)
 		.then(response => {
 			// the new code starts here
 			if (response.ok) {
+				return response.json()
 			}
+
 			throw new Error(response.statusText)
 		})
 		.then(parks => {
-			console.log(parks) // [{ name, url }]
+			console.log(parks)
 
 			// clear the error
 			$('#js-error-message').text('')
@@ -43,13 +44,13 @@ function getParkResults(states, maxResults) {
 			// if repos is empty
 			if (parks.data.length < 1) {
 				console.log('empty repo')
-				$('#js-error-message').text(`That user has no repos!`)
+				$('#js-error-message').text(`no parks!`)
 			} else {
 				const parksHTML = getParksHTML(parks.data)
-				
+
 				// unhide results section & render HTML
 				$('#results').show()
-                $('#results-list').html(parksHTML)
+				$('#results-list').html(parksHTML)
 			}
 		})
 		.catch(err => {
@@ -61,6 +62,10 @@ function getParkResults(states, maxResults) {
 function handleSubmit() {
 	$('.user-form').submit(function(event) {
 		event.preventDefault()
+
+		// clear results list.
+		$('#results-list').empty()
+		$('#results').hide()
 
 		const states = $(this)
 			.find('#states')
