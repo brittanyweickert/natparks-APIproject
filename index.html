@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>National Parks</title>
+		<link rel="stylesheet" href="main.css" />
+	</head>
+
+	<body>
+		<div class="container">
+			<form class="user-form">
+				<h1>Planning your next vacation?</h1>
+				<h2>Find National Parks:</h2>
+				<label for="states">
+					Enter Two Letter State Code (separate each state by comma):
+					<input
+						type="text"
+						name="states"
+						id="states"
+						placeholder="States"
+						required
+					/>
+				</label>
+				<label for="max">
+					Max number of results to see:
+					<input
+						type="number"
+						name="max"
+						id="max"
+						placeholder="number"
+						value="10"
+						min="1"
+						required
+					/>
+				</label>
+				<button type="submit" name="submit" value="Go">Submit</button>
+			</form>
+			<p id="js-error-message" class="error-message"></p>
+			<section id="results" class="hidden">
+				<h2>Search Results</h2>
+				<ul id="results-list"></ul>
+			</section>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+		<script src="scripts.js"></script>
+	</body>
+</html>
