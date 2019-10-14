@@ -21,6 +21,7 @@ function getParksHTML(parks) {
 function getParkResults(states, maxResults) {
 	let params = {
 		stateCode: states,
+		limit: maxResults,
 		api_key: API_KEY
 	}
 
